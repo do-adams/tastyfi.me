@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/do-adams/tastyfi.me/issues"
   },
-  "homepage": "https://github.com/do-adams/tastyfi.me#readme"
+  "homepage": "https://github.com/do-adams/tastyfi.me#readme",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "dotenv": "^5.0.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-spotify": "^1.0.0"
+  }
 }
