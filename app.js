@@ -7,6 +7,7 @@ const path = require('path'),
 	express = require('express'),
 	app = express(),
 	session = require('express-session'),
+	MongoStore = require('connect-mongo')(session),
 	flash = require('connect-flash'),
 	passport = require('passport'),
 	SpotifyStrategy = require('passport-spotify').Strategy,
@@ -14,7 +15,8 @@ const path = require('path'),
 	request = require('request');
 
 // DB SETUP
-mongoose.connect('mongodb://localhost/tastyfi_me', function(err) {
+const dbUrl = process.env.DATABASE_URL || 'mongodb://localhost/tastyfi_me';
+mongoose.connect(dbUrl, function(err) {
 	if (err) throw err;
 });
 
@@ -26,6 +28,9 @@ app.use(express.urlencoded({extended: true})); // bodyparser
 
 // SESSION SETUP
 app.use(session({
+	store: new MongoStore({
+		url: dbUrl
+	}),
 	secret: process.env.SESSION_SECRET || 'Debug Session Key',
 	resave: false,
 	saveUninitialized: false,
