@@ -125,7 +125,7 @@ app.get('/success', (req, res, next) => {
 });
 
 // SPOTIFY ACCESS TOKEN REFRESH MIDDLEWARE 
-app.use('/refresh', (req, res, next) => {
+app.get('/refresh', (req, res, next) => {
 	if (req.isAuthenticated()) {
 		const user = req.user;
 		const options = {
@@ -149,7 +149,6 @@ app.use('/refresh', (req, res, next) => {
 				return res.redirect('/');
 			} else {
 				user.accessToken = body.access_token;
-				user.refreshToken = body.refresh_token;
 				user.expiresIn = body.expires_in;
 				user.save();
 				return res.json(body);
