@@ -61,7 +61,7 @@ passport.use(new SpotifyStrategy({
 					displayName: profile.displayName,
 					accessToken: accessToken,
 					refreshToken: refreshToken,
-					expires_in: expires_in
+					expiresIn: expires_in
 				}, function(err, newUser) {
 					return done(err, newUser);
 				});
@@ -71,7 +71,7 @@ passport.use(new SpotifyStrategy({
 				user.displayName = profile.displayName;
 				user.accessToken = accessToken;
 				user.refreshToken = refreshToken;
-				user.expires_in = expires_in;
+				user.expiresIn = expires_in;
 				user.save(function(err, updatedUser) {
 					return done(err, updatedUser);
 				});
@@ -89,6 +89,14 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 
+// TEMPLATE VIEW DATA MIDDLEWARE
+app.use((req, res, next) => {
+	res.locals.currentUser = req.user;
+	res.locals.error = req.flash('error');
+	res.locals.success = req.flash('success');
+	return next();
+});
+
 // ROUTES
 app.get('/', (req, res) => {
 	res.send('Hello world!');
@@ -100,18 +108,56 @@ app.get('/success', (req, res, next) => {
 		throw new Error();
 	}
 	const user = req.user;
-	request({
+	const options = {
 		url: `https://api.spotify.com/v1/users/${user.spotifyId}`,
 		headers: {
-			'Authorization': 'Bearer ' + user.accessToken
+			Authorization: 'Bearer ' + user.accessToken
 		},
 		json: true
-	}, function(err, response, body) {
+	};
+	request(options, function(err, response, body) {
 		if (err || response.statusCode !== 200) {
-			next(err || new Error('Error retrieving data from Spotify'));
+			return next(err || new Error('Error retrieving data from Spotify'));
+		} else {
+			res.json(body);
 		}
-		res.json(body);
 	});
+});
+
+// SPOTIFY ACCESS TOKEN REFRESH MIDDLEWARE 
+app.use('/refresh', (req, res, next) => {
+	if (req.isAuthenticated()) {
+		const user = req.user;
+		const options = {
+			url: 'https://accounts.spotify.com/api/token',
+			headers: {
+				Authorization: 'Basic ' + Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`).toString('base64')
+			},
+			form: {
+				grant_type: 'refresh_token',
+				refresh_token: user.refreshToken 
+			}, 
+			json: true
+		};
+		// Request new access token
+		request.post(options, function(err, response, body) {
+			if (err || response.statusCode !== 200) {
+				// Log the user out if refresh fails
+				console.error(err && err.stack);
+				req.logout();
+				req.flash('error', 'There was an error when authorizing your Spotify account. Please sign in again');
+				return res.redirect('/');
+			} else {
+				user.accessToken = body.access_token;
+				user.refreshToken = body.refresh_token;
+				user.expiresIn = body.expires_in;
+				user.save();
+				return res.json(body);
+			}
+		});
+	} else {
+		return res.send('User is not logged in');
+	}
 });
 
 // AUTH ROUTES

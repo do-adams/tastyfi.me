@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
 	displayName: String,
 	accessToken: String,
 	refreshToken: String,
-	expires_in: Number
+	expiresIn: Number
 }, { 
 	timestamps: true
 });
