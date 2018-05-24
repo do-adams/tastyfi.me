@@ -10,7 +10,8 @@ const path = require('path'),
 	flash = require('connect-flash'),
 	passport = require('passport'),
 	SpotifyStrategy = require('passport-spotify').Strategy,
-	User = require('./models/user');
+	User = require('./models/user'),
+	request = require('request');
 
 // DB SETUP
 mongoose.connect('mongodb://localhost/tastyfi_me', function(err) {
@@ -38,7 +39,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// PASSPORT SPOTIFY AUTHENTICATION SETUP
+// PASSPORT SPOTIFY AUTHORIZATION SETUP
 passport.use(new SpotifyStrategy({
 	clientID: process.env.CLIENT_ID,
 	clientSecret: process.env.CLIENT_SECRET,
@@ -48,7 +49,8 @@ passport.use(new SpotifyStrategy({
 		User.findOne({spotifyId: profile.id}, function(err, user) {
 			if (err) {
 				return done(err);
-			} else if (!user) {
+			} else if (!user) { 
+				// Register user
 				User.create({ 
 					spotifyId: profile.id,
 					displayName: profile.displayName,
@@ -59,6 +61,7 @@ passport.use(new SpotifyStrategy({
 					return done(err, newUser);
 				});
 			} else {
+				// If user re-authorizes, update the user 
 				user.spotifyId = profile.id;
 				user.displayName = profile.displayName;
 				user.accessToken = accessToken;
@@ -86,8 +89,24 @@ app.get('/', (req, res) => {
 	res.send('Hello world!');
 });
 
-app.get('/success', (req, res) => {
-	res.send('Authentication was successful!');
+app.get('/success', (req, res, next) => {
+	if (!req.user) {
+		// TODO: Remove when adding auth-checking middleware
+		throw new Error();
+	}
+	const user = req.user;
+	request({
+		url: `https://api.spotify.com/v1/users/${user.spotifyId}`,
+		headers: {
+			'Authorization': 'Bearer ' + user.accessToken
+		},
+		json: true
+	}, function(err, response, body) {
+		if (err || response.statusCode !== 200) {
+			next(err || new Error('Error retrieving data from Spotify'));
+		}
+		res.json(body);
+	});
 });
 
 // AUTH ROUTES
@@ -100,7 +119,15 @@ app.get('/auth/spotify/callback',
 	}
 );
 
+// ERROR HANDLING MIDDLEWARE
+app.use((err, req, res, next) => {
+		console.error(err.stack);
+		req.flash('error', err.message);
+		res.status(500);
+		res.redirect('back');
+});
+
 const port = process.env.PORT || 3000;
-app.listen(port, (req, res) => {
+app.listen(port, () => {
 	console.log(`Server started on port ${port}`);
 });
