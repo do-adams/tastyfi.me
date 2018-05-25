@@ -131,11 +131,13 @@ app.get('/success', (req, res, next) => {
 app.get('/refresh', (req, res, next) => {
 	if (req.isAuthenticated()) {
 		const user = req.user;
+
 		// Determine whether token has expired or not
 		const now = new Date(Date.now());
 		const tokenDate = user.access.dateCreated;
 		const elapsedTime = Math.floor(Math.abs(now - tokenDate) / 1000); // in seconds
-		const hasExpired = elapsedTime >= user.access.expiresIn;
+		const expirationPeriod = user.access.expiresIn - 60 * 5; // add a five minute window to avoid timing the API
+		const hasExpired = elapsedTime >= user.access.expiresIn - expirationPeriod;
 
 		if (hasExpired) {
 			// Request new access token
@@ -159,6 +161,7 @@ app.get('/refresh', (req, res, next) => {
 					return res.redirect('/');
 				} else {
 					user.access.accessToken = body.access_token;
+					user.access.dateCreated = now; // use earlier Date value to avoid timing issues
 					user.access.expiresIn = body.expires_in;
 					user.save();
 					return res.json(body);
