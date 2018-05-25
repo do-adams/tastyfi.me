@@ -12,7 +12,7 @@ const path = require('path'),
 	passport = require('passport'),
 	SpotifyStrategy = require('passport-spotify').Strategy,
 	User = require('./models/User'),
-	request = require('request');
+	SpotifyRequestService = require('./services/SpotifyRequestService');
 
 // DB SETUP
 const dbUrl = process.env.DATABASE_URL || 'mongodb://localhost/tastyfi_me';
@@ -92,7 +92,13 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 
-// TEMPLATE VIEW DATA MIDDLEWARE
+// APPLICATION LEVEL VARIABLES MIDDLEWARE
+app.use((req, res, next) => {
+	app.locals.spotifyRequest = new SpotifyRequestService();
+	return next();
+});
+
+// RESPONSE LEVEL VARIABLES MIDDLEWARE
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.error = req.flash('error');
@@ -106,19 +112,13 @@ app.get('/', (req, res) => {
 });
 
 app.get('/success', (req, res, next) => {
-	if (!req.user) {
+	const user = req.user;
+	if (!user) {
 		// TODO: Remove when adding auth-checking middleware
 		throw new Error();
 	}
-	const user = req.user;
-	const options = {
-		url: `https://api.spotify.com/v1/users/${user.spotifyId}`,
-		headers: {
-			Authorization: 'Bearer ' + user.access.accessToken
-		},
-		json: true
-	};
-	request(options, function(err, response, body) {
+	const spotifyRequest = req.app.locals.spotifyRequest;
+	spotifyRequest.getUserProfile(user, function(err, response, body) {
 		if (err || response.statusCode !== 200) {
 			return next(err || new Error('Error retrieving data from Spotify'));
 		} else {
@@ -128,48 +128,27 @@ app.get('/success', (req, res, next) => {
 });
 
 // TODO: REFACTOR INTO SPOTIFY ACCESS TOKEN REFRESH MIDDLEWARE 
-app.get('/refresh', (req, res, next) => {
+app.get('/refresh', (req, res) => {
 	if (req.isAuthenticated()) {
-		const user = req.user;
-
-		// Determine whether token has expired or not
-		const now = new Date(Date.now());
-		const tokenDate = user.access.dateCreated;
-		const elapsedTime = Math.floor(Math.abs(now - tokenDate) / 1000); // in seconds
-		const expirationPeriod = user.access.expiresIn - 60 * 5; // add a five minute window to avoid timing the API
-		const hasExpired = elapsedTime >= user.access.expiresIn - expirationPeriod;
-
-		if (hasExpired) {
-			// Request new access token
-			const options = {
-				url: 'https://accounts.spotify.com/api/token',
-				headers: {
-					Authorization: 'Basic ' + Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`).toString('base64')
-				},
-				form: {
-					grant_type: 'refresh_token',
-					refresh_token: user.refreshToken 
-				}, 
-				json: true
-			};
-			request.post(options, function(err, response, body) {
-				if (err || response.statusCode !== 200) {
-					// Log the user out if refresh attempt fails
-					console.error(err && err.stack);
-					req.logout();
-					req.flash('error', 'There was an error when authorizing your Spotify account. Please sign in again');
-					return res.redirect('/');
-				} else {
-					user.access.accessToken = body.access_token;
-					user.access.dateCreated = now; // use earlier Date value to avoid timing issues
-					user.access.expiresIn = body.expires_in;
-					user.save();
-					return res.json(body);
-				}
-			});
-		} else { 
-			return res.send('Access token has not expired');
-		}
+		const user = req.user, 
+			now = new Date(Date.now()),
+			spotifyRequest = req.app.locals.spotifyRequest;
+		
+		spotifyRequest.refreshAccessToken(user, function(err, response, body) {
+			if (err || response.statusCode !== 200) {
+				// Log the user out if refresh attempt fails
+				console.error(err && err.stack);
+				req.logout();
+				req.flash('error', 'There was an error when authorizing your Spotify account. Please sign in again');
+				return res.redirect('/');
+			} else {
+				user.access.accessToken = body.access_token;
+				user.access.dateCreated = now;
+				user.access.expiresIn = body.expires_in;
+				user.save();
+				return res.json(body);
+			}
+		});
 	} else {
 		return res.send('User is not logged in');
 	}
