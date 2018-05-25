@@ -11,7 +11,7 @@ const path = require('path'),
 	flash = require('connect-flash'),
 	passport = require('passport'),
 	SpotifyStrategy = require('passport-spotify').Strategy,
-	User = require('./models/user'),
+	User = require('./models/User'),
 	request = require('request');
 
 // DB SETUP
