@@ -61,7 +61,7 @@ passport.use(new SpotifyStrategy({
 					displayName: profile.displayName,
 					access: { 
 						accessToken: accessToken,
-						expiresIn: expires_in
+						expirationDate: User.getExpirationDate(expires_in)
 					},
 					refreshToken: refreshToken
 				}, function(err, newUser) {
@@ -72,8 +72,7 @@ passport.use(new SpotifyStrategy({
 				user.spotifyId = profile.id;
 				user.displayName = profile.displayName;
 				user.access.accessToken = accessToken;
-				user.access.dateCreated = new Date(Date.now());
-				user.access.expiresIn = expires_in;
+				user.access.expirationDate = User.getExpirationDate(expires_in);
 				user.refreshToken = refreshToken;
 				user.save(function(err, updatedUser) {
 					return done(err, updatedUser);
@@ -130,8 +129,7 @@ app.get('/success', (req, res, next) => {
 // TODO: REFACTOR INTO SPOTIFY ACCESS TOKEN REFRESH MIDDLEWARE 
 app.get('/refresh', (req, res) => {
 	if (req.isAuthenticated()) {
-		const user = req.user, 
-			now = new Date(Date.now()),
+		const user = req.user,
 			spotifyRequest = req.app.locals.spotifyRequest;
 		
 		spotifyRequest.refreshAccessToken(user, function(err, response, body) {
@@ -143,8 +141,7 @@ app.get('/refresh', (req, res) => {
 				return res.redirect('/');
 			} else {
 				user.access.accessToken = body.access_token;
-				user.access.dateCreated = now;
-				user.access.expiresIn = body.expires_in;
+				user.access.expirationDate = body.expires_in;
 				user.save();
 				return res.json(body);
 			}
