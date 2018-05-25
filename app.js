@@ -12,7 +12,7 @@ const path = require('path'),
 	passport = require('passport'),
 	SpotifyStrategy = require('passport-spotify').Strategy,
 	User = require('./models/User'),
-	SpotifyRequestService = require('./services/SpotifyRequestService');
+	spotifyRequestService = require('./services/SpotifyRequestService');
 
 // DB SETUP
 const dbUrl = process.env.DATABASE_URL || 'mongodb://localhost/tastyfi_me';
@@ -93,7 +93,7 @@ passport.deserializeUser(function(id, done) {
 
 // APPLICATION LEVEL VARIABLES MIDDLEWARE
 app.use((req, res, next) => {
-	app.locals.spotifyRequest = new SpotifyRequestService();
+	app.locals.spotifyRequest = spotifyRequestService();
 	return next();
 });
 
@@ -117,7 +117,7 @@ app.get('/success', (req, res, next) => {
 		throw new Error();
 	}
 	const spotifyRequest = req.app.locals.spotifyRequest;
-	spotifyRequest.getUserProfile(user, function(err, response, body) {
+	spotifyRequest.getUserProfile(user.spotifyId, user.access.accessToken, function(err, response, body) {
 		if (err || response.statusCode !== 200) {
 			return next(err || new Error('Error retrieving data from Spotify'));
 		} else {
@@ -131,8 +131,8 @@ app.get('/refresh', (req, res) => {
 	if (req.isAuthenticated()) {
 		const user = req.user,
 			spotifyRequest = req.app.locals.spotifyRequest;
-		
-		spotifyRequest.refreshAccessToken(user, function(err, response, body) {
+
+		spotifyRequest.refreshAccessToken(user.refreshToken, function(err, response, body) {
 			if (err || response.statusCode !== 200) {
 				// Log the user out if refresh attempt fails
 				console.error(err && err.stack);
@@ -141,7 +141,7 @@ app.get('/refresh', (req, res) => {
 				return res.redirect('/');
 			} else {
 				user.access.accessToken = body.access_token;
-				user.access.expirationDate = body.expires_in;
+				user.access.expirationDate = User.getExpirationDate(body.expires_in);
 				user.save();
 				return res.json(body);
 			}

@@ -4,15 +4,13 @@ require('dotenv').config();
 
 const request = require('request');
 
-class SpotifyRequestService {
+module.exports = function spotifyRequestService() {
 
-	constructor() {}
-
-	getUserProfile(user, cb) {
+	function getUserProfile(spotifyId, accessToken, cb) {
 		const options = {
-			url: `https://api.spotify.com/v1/users/${user.spotifyId}`,
+			url: `https://api.spotify.com/v1/users/${spotifyId}`,
 			headers: {
-				Authorization: 'Bearer ' + user.access.accessToken
+				Authorization: 'Bearer ' + accessToken
 			},
 			json: true
 		};
@@ -21,16 +19,17 @@ class SpotifyRequestService {
 		});
 	}
 
-	refreshAccessToken(user, cb) {
+	function refreshAccessToken(refreshToken, cb) {
 		// Request new access token
 		const options = {
 			url: 'https://accounts.spotify.com/api/token',
 			headers: {
-				Authorization: 'Basic ' + Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`).toString('base64')
+				Authorization: 'Basic ' + 
+				Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`).toString('base64')
 			},
 			form: {
 				grant_type: 'refresh_token',
-				refresh_token: user.refreshToken 
+				refresh_token: refreshToken 
 			}, 
 			json: true
 		};
@@ -38,6 +37,9 @@ class SpotifyRequestService {
 			cb(err, response, body);
 		});
 	}
-}
 
-module.exports = SpotifyRequestService;
+	return {
+		getUserProfile: getUserProfile,
+		refreshAccessToken: refreshAccessToken
+	};
+};
