@@ -11,8 +11,7 @@ const path = require('path'),
 	flash = require('connect-flash'),
 	passport = require('passport'),
 	SpotifyStrategy = require('passport-spotify').Strategy,
-	User = require('./models/User'),
-	spotifyRequestService = require('./services/SpotifyRequestService');
+	User = require('./models/User');
 
 // DB SETUP
 const dbUrl = process.env.DATABASE_URL || 'mongodb://localhost/tastyfi_me';
@@ -91,12 +90,6 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 
-// APPLICATION LEVEL VARIABLES MIDDLEWARE
-app.use((req, res, next) => {
-	app.locals.spotifyRequest = spotifyRequestService();
-	return next();
-});
-
 // RESPONSE LEVEL VARIABLES MIDDLEWARE
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
@@ -106,23 +99,13 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
-app.get('/', (req, res) => {
-	res.send('Hello world!');
-});
+const indexRoutes = require('./routes/index'),
+	authRoutes = require('./routes/auth')(passport),	
+	usersRoutes = require('./routes/users');
 
-const spotifyRoutes = require('./routes/spotify');
-
-app.use('/spotify', spotifyRoutes);
-
-// AUTH ROUTES
-app.get('/auth/spotify', passport.authenticate('spotify'));
-
-app.get('/auth/spotify/callback', 
-	passport.authenticate('spotify', { scope: ['user-top-read'], failureRedirect: '/'}), 
-	(req, res) => {
-		res.redirect('/spotify/user-profile');
-	}
-);
+app.use('/', indexRoutes);
+app.use('/auth', authRoutes);
+app.use('/users/:id', usersRoutes);
 
 // ERROR HANDLING MIDDLEWARE
 app.use((err, req, res, next) => {
