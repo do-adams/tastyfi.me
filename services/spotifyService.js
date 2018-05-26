@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const request = require('request');
 
-module.exports = function spotifyRequestService() {
+module.exports = function spotifyService() {
 
 	function getUserProfile(spotifyId, accessToken, cb) {
 		const options = {
