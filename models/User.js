@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema({
 
 /**
  * 
- * @param {*} expiresIn The number of seconds until expiration
+ * @param {*} expiresIn The number of seconds until expiration.
+ * Typically expected to be 3600 secs or one hour.
  */
 userSchema.statics.getExpirationDate = function(expiresIn) {
 	// Establish an earlier cutoff to avoid timing issues and convert to ms

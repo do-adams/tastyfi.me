@@ -3,11 +3,11 @@
 const express = require('express'),
 	User = require('../models/User'),
 	SpotifyService = require('../services/SpotifyService'),
-	tokenizer = require('../middleware/tokenizer')();
+	refreshAuth = require('../middleware/refreshAuth');
 
 const router = express.Router({mergeParams: true});
 
-router.get('/', tokenizer.refresh, (req, res, next) => {
+router.get('/', refreshAuth, (req, res, next) => {
 	User.findById(req.params.id, function(err, user) {
 		if (err || !user) {
 			return next(err || new Error('User not found. Please try authorizing this account.'));
