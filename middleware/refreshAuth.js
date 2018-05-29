@@ -2,6 +2,7 @@
 
 const User = require('../models/User'),
 	SpotifyService = require('../services/SpotifyService');
+
 	
 /**
  * Refreshes the Spotify Auth Access Token if Expired.
