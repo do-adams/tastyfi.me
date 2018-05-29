@@ -21,6 +21,58 @@ class SpotifyService {
 		});
 	}
 
+	/**
+	 * 
+	 * @param {*} accessToken 
+	 * @param {*} params Optional query string parameters: limit, offset, and time_range.
+	 * @param {*} cb 
+	 */
+	static getTopArtists(accessToken, params, cb) {
+		// Safely extract the necessary params
+		const query = Object.assign({}, 
+			params.limit ? {limit: params.limit} : {},
+			params.offset ? {offset: params.offset} : {},
+			params.time_range ? {time_range: params.time_range} : {});
+
+		const options = {
+			url: 'https://api.spotify.com/v1/me/top/artists',
+			headers: {
+				Authorization: 'Bearer ' + accessToken
+			},
+			qs: query,
+			json: true
+		};
+		request(options, function(err, response, body) {
+			cb(err, response, body);
+		});
+	}
+
+	/**
+	 * 
+	 * @param {*} accessToken 
+	 * @param {*} params Optional query string parameters: limit, offset, and time_range.
+	 * @param {*} cb 
+	 */
+	static getTopTracks(accessToken, params, cb) {
+		// Safely extract the necessary params
+		const query = Object.assign({}, 
+			params.limit ? {limit: params.limit} : {},
+			params.offset ? {offset: params.offset} : {},
+			params.time_range ? {time_range: params.time_range} : {});
+
+		const options = {
+			url: 'https://api.spotify.com/v1/me/top/tracks',
+			headers: {
+				Authorization: 'Bearer ' + accessToken
+			},
+			qs: query,
+			json: true
+		};
+		request(options, function(err, response, body) {
+			cb(err, response, body);
+		});
+	}
+
 	static refreshAccessToken(refreshToken, cb) {
 		// Request new access token
 		const options = {
