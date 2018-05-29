@@ -1,7 +1,7 @@
 'use strict';
 
 const User = require('../models/User'),
-	spotifyService = require('../services/spotifyService')();
+	SpotifyService = require('../services/SpotifyService');
 
 module.exports = function tokenizer() {
 	/**
@@ -15,9 +15,11 @@ module.exports = function tokenizer() {
 			if (err || !user) {
 				return next(err || new Error('User not found. Please try authorizing this account.'));
 			}
-			const now = new Date(Date.now());
-			if (now >= user.access.expirationDate) {
-				spotifyService.refreshAccessToken(user.refreshToken, function(err, response, body) {
+
+			const now = new Date(Date.now()), expDate = user.access.expirationDate;
+			
+			if (now >= expDate) {
+				SpotifyService.refreshAccessToken(user.refreshToken, function(err, response, body) {
 					if (err || response.statusCode !== 200) {
 						return next(err || 
 							new Error('There was an error when authorizing your Spotify account. Please sign in again'));

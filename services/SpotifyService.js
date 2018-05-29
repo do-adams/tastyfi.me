@@ -4,9 +4,11 @@ require('dotenv').config();
 
 const request = require('request');
 
-module.exports = function spotifyService() {
+class SpotifyService {
 
-	function getUserProfile(spotifyId, accessToken, cb) {
+	constructor() {}
+
+	static getUserProfile(spotifyId, accessToken, cb) {
 		const options = {
 			url: `https://api.spotify.com/v1/users/${spotifyId}`,
 			headers: {
@@ -19,7 +21,7 @@ module.exports = function spotifyService() {
 		});
 	}
 
-	function refreshAccessToken(refreshToken, cb) {
+	static refreshAccessToken(refreshToken, cb) {
 		// Request new access token
 		const options = {
 			url: 'https://accounts.spotify.com/api/token',
@@ -37,9 +39,6 @@ module.exports = function spotifyService() {
 			cb(err, response, body);
 		});
 	}
+}
 
-	return {
-		getUserProfile: getUserProfile,
-		refreshAccessToken: refreshAccessToken
-	};
-};
+module.exports = SpotifyService;
