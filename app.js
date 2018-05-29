@@ -2,6 +2,9 @@
 
 require('dotenv').config();
 
+// async stack traces in development
+if (process.env.NODE_ENV !== 'production') require('longjohn');
+
 const path = require('path'),
 	mongoose = require('mongoose'),
 	express = require('express'),
