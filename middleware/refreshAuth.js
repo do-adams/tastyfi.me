@@ -10,25 +10,25 @@ const User = require('../models/User'),
  * Middleware MUST be used in a route that has access to
  * the user id param
  */
-function refreshAuth(req, res, next) {
-	User.findById(req.params.id, function(err, user) {
+async function refreshAuth(req, res, next) {
+	User.findById(req.params.id, async function(err, user) {
 		if (err || !user) {
 			return next(err || new Error('User not found.'));
 		}
-
 		const now = new Date(Date.now()), expDate = user.access.expirationDate;
-
 		if (now >= expDate) {
-			SpotifyService.refreshAccessToken(user.refreshToken, function(err, response, body) {
-				if (err || response.statusCode !== 200) {
-					return next(err || 
-						new Error('There was an error when authorizing this Spotify account.'));
-				} 				
-				user.access.accessToken = body.access_token;
-				user.access.expirationDate = User.getExpirationDate(body.expires_in);
+			try {
+				const response = await SpotifyService.refreshAccessToken(user.refreshToken);
+				if (response.statusCode !== 200) {
+					throw new Error(JSON.stringify(response.body));
+				}
+				user.access.accessToken = response.body.access_token;
+				user.access.expirationDate = User.getExpirationDate(response.body.expires_in);
 				user.save();
 				return next();
-			});
+			} catch (err) {
+				return next(err);
+			}
 		} else {
 			return next();
 		}

@@ -7,22 +7,25 @@ const express = require('express'),
 
 const router = express.Router({mergeParams: true});
 
-router.get('/', refreshAuth, (req, res, next) => {
-	User.findById(req.params.id, function(err, user) {
+router.get('/', refreshAuth, async (req, res, next) => {
+	User.findById(req.params.id, async function(err, user) {
 		if (err || !user) {
 			return next(err || new Error('User not found.'));
 		}
-		SpotifyService.getUserProfile(user.spotifyId, user.access.accessToken, function(err, response, body) {
-			if (err || response.statusCode !== 200) {
-				return next(err || new Error('Error retrieving data from Spotify'));
+		try {
+			const response = await SpotifyService.getUserProfile(user.spotifyId, user.access.accessToken); 
+			if (response.statusCode !== 200) {
+				throw new Error(JSON.stringify(response.body));
 			} 
-			return res.json(body);
-		});
+			return res.json(response.body);
+		} catch (err) {
+			return next(err);
+		}
 	});
 });
 
-router.get('/top-artists', refreshAuth, (req, res, next) => {
-	User.findById(req.params.id, function(err, user) {
+router.get('/top-artists', refreshAuth, async (req, res, next) => {
+	User.findById(req.params.id, async function(err, user) {
 		if (err || !user) {
 			return next(err || new Error('User not found.'));
 		}
@@ -30,17 +33,20 @@ router.get('/top-artists', refreshAuth, (req, res, next) => {
 			limit: '50',
 			time_range: 'long_term'
 		};
-		SpotifyService.getTopArtists(user.access.accessToken, params, function(err, response, body) {
-			if (err || response.statusCode !== 200) {
-				return next(err || new Error('Error retrieving data from Spotify'));
+		try {
+			const response = await SpotifyService.getTopArtists(user.access.accessToken, params);
+			if (response.statusCode !== 200) {
+				throw new Error(JSON.stringify(response.body));
 			} 
-			return res.json(body);
-		});
+			return res.json(response.body);
+		} catch (err) {
+			return next(err);
+		}
 	});
 });
 
-router.get('/top-tracks', refreshAuth, (req, res, next) => {
-	User.findById(req.params.id, function(err, user) {
+router.get('/top-tracks', refreshAuth, async (req, res, next) => {
+	User.findById(req.params.id, async function(err, user) {
 		if (err || !user) {
 			return next(err || new Error('User not found.'));
 		}
@@ -48,12 +54,15 @@ router.get('/top-tracks', refreshAuth, (req, res, next) => {
 			limit: '50',
 			time_range: 'long_term'
 		};
-		SpotifyService.getTopTracks(user.access.accessToken, params, function(err, response, body) {
-			if (err || response.statusCode !== 200) {
-				return next(err || new Error('Error retrieving data from Spotify'));
+		try {
+			const response = await SpotifyService.getTopTracks(user.access.accessToken, params);
+			if (response.statusCode !== 200) {
+				throw new Error(JSON.stringify(response.body));
 			} 
-			return res.json(body);
-		});
+			return res.json(response.body);
+		} catch (err) {
+			return next(err);
+		}
 	});
 });
 
