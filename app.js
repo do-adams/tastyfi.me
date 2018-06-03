@@ -52,13 +52,12 @@ passport.use(new SpotifyStrategy({
 	clientSecret: process.env.CLIENT_SECRET,
 	callbackURL: process.env.REDIRECT_URI || 'http://localhost:3000/auth/spotify/callback'
 }, 
-	function(accessToken, refreshToken, expires_in, profile, done) {
-		User.findOne({spotifyId: profile.id}, function(err, user) {
-			if (err) {
-				return done(err);
-			} else if (!user) { 
+	async function(accessToken, refreshToken, expires_in, profile, done) {
+		try {
+			const user = await User.findOne({spotifyId: profile.id});
+			if (!user) { 
 				// Register user
-				User.create({ 
+				const newUser = await User.create({ 
 					spotifyId: profile.id,
 					displayName: profile.displayName,
 					access: { 
@@ -66,9 +65,8 @@ passport.use(new SpotifyStrategy({
 						expirationDate: User.getExpirationDate(expires_in)
 					},
 					refreshToken: refreshToken
-				}, function(err, newUser) {
-					return done(err, newUser);
 				});
+				return done(null, newUser);
 			} else {
 				// If user re-authorizes, update the user 
 				user.spotifyId = profile.id;
@@ -76,11 +74,12 @@ passport.use(new SpotifyStrategy({
 				user.access.accessToken = accessToken;
 				user.access.expirationDate = User.getExpirationDate(expires_in);
 				user.refreshToken = refreshToken;
-				user.save(function(err, updatedUser) {
-					return done(err, updatedUser);
-				});
+				const updatedUser = await user.save();
+				return done(null, updatedUser);
 			}
-		});
+		} catch (err) {
+			return done(err);
+		}
 }));
 
 // PASSPORT SESSION SETUP
