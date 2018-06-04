@@ -77,6 +77,27 @@ class SpotifyService {
 		return makeRequestAsync(options);
 	}
 
+	/**
+	 * 
+	 * @param {*} accessToken 
+	 * @param {*} trackIds An array of track ids from Spotify
+	 */
+	static getAudioFeatures(accessToken, trackIds) {
+		let queryString = '';
+		if (trackIds && trackIds.length > 0) {
+			queryString = `?ids=${trackIds.join(',')}`;
+		}
+		const options = {
+			url: 'https://api.spotify.com/v1/audio-features' + queryString,
+			method: 'GET',
+			headers: {
+				Authorization: 'Bearer ' + accessToken	
+			},
+			json: true
+		};
+		return makeRequestAsync(options);
+	}
+
 	static refreshAccessToken(refreshToken) {
 		// Request new access token
 		const options = {
