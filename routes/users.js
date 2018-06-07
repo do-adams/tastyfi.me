@@ -3,7 +3,7 @@
 const express = require('express'),
 	User = require('../models/User'),
 	SpotifyService = require('../services/SpotifyService'),
-	refreshAuth = require('../middleware/refreshAuth');
+	refreshAuth = require('../middleware/users/refreshAuth');
 
 const router = express.Router({mergeParams: true});
 

@@ -1,7 +1,7 @@
 'use strict';
 
-const User = require('../models/User'),
-	SpotifyService = require('../services/SpotifyService');
+const User = require('../../models/User'),
+	SpotifyService = require('../../services/SpotifyService');
 
 	
 /**
