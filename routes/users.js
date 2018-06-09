@@ -31,7 +31,8 @@ router.get('/', refreshAuth, async (req, res, next) => {
 				throw new Error(JSON.stringify(response.body));
 			}
 		});
-		return res.json({
+
+		return res.render('users/show', {
 			profile: responses[0].body,
 			topArtists: responses[1].body,
 			topTracks: responses[2].body
