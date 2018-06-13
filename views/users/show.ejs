@@ -38,11 +38,14 @@
 								<% } %>
 							</div>
 							<div class="content">
-								<a href="<%= item.preview_url %>" class="header"><%= item.name %></a>
+								<!-- URI to track expected to be in the format of spotify:track:trackId -->
+								<% let trackUri = item.uri.split(':'); %>
+								<% trackUri = `https://open.${trackUri[0]}.com/${trackUri[1]}/${trackUri[2]}` %>
+								<a href="<%= trackUri %>" class="header"><%= item.name %></a>
 								<div class="meta">
 									<span>
 										<% let artists = item.artists.reduce((acc, curr) => acc + ', ' + curr.name, ''); %>
-										<% if (artists) artists = artists.slice(artists.indexOf(',') + 1); %>
+										<% if (artists) artists = artists.slice(artists.indexOf(',') + 2); %>
 										<%= artists %>
 									</span>
 								</div>
