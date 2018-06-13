@@ -9,27 +9,31 @@
 <div class="ui grid container">
 	<div class="three column row">
 		<div class="column">
-			<div class="ui items">
-				<div class="item">
-					<div class="image">
-							<% if (profile.images.length > 0) { %>
-								<img id="profile-img" src="<%= profile.images[0].url %>" alt="">
-							<% } %>
-					</div>
-					<div class="content">
-							<a href="" class="header"><%= profile.display_name || profile.id %></a>
-						<div class="meta">
-								<span><%= profile.followers.total %> followers</span>
+			<div class="user-profile">
+				<div class="ui items">
+						<div class="item">
+							<div class="image">
+									<% if (profile.images.length > 0) { %>
+										<img id="profile-img" src="<%= profile.images[0].url %>" alt="">
+									<% } %>
+							</div>
+							<div class="content">
+								<a href="" class="header"><%= profile.display_name || profile.id %></a>
+								<div class="meta">
+										<span><%= profile.followers.total %> followers</span>
+								</div>
+								<div class="description">
+									<p><a href="<%= profile.external_urls.spotify %>" target="_blank">View My Profile</a></p>
+								</div>
+							</div>
 						</div>
-						<div class="description">
-							<p><a href="<%= profile.external_urls.spotify %>" target="_blank">View My Profile</a></p>
-						</div>
-					</div>
 				</div>
-			</div>
+			</div> <!-- end user-profile -->
+		</div> <!-- end first column -->
 		<div class="column">
-			<h1>Top 50 Tracks</h1>
-			<div class="ui items">
+			<div class="top-tracks">
+				<h1>Top 50 Tracks</h1>
+				<div class="ui items">
 					<% topTracks.items.forEach(item => { %>
 						<div class="item">
 							<div class="image">
@@ -43,6 +47,7 @@
 								<% trackUri = `https://open.${trackUri[0]}.com/${trackUri[1]}/${trackUri[2]}` %>
 								<a href="<%= trackUri %>" class="header"><%= item.name %></a>
 								<div class="meta">
+									<!-- Build the Artists string -->
 									<span>
 										<% let artists = item.artists.reduce((acc, curr) => acc + ', ' + curr.name, ''); %>
 										<% if (artists) artists = artists.slice(artists.indexOf(',') + 2); %>
@@ -55,11 +60,11 @@
 							</div>
 						</div>
 					<% }); %>
-			</div>
-		</div>
+				</div>
+			</div> <!-- end top tracks -->
+		</div> <!-- end second column-->
 		<div class="column">
-		</div>
-	</div>
+		</div> <!-- end third column-->
 </div>
 
 <% include ../partials/footer %>
