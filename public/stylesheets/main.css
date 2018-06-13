@@ -1,8 +1,11 @@
-body {
-	background-color: black;
-	color: white;
-}
-
 main {
 	margin-top: 10em;
+}
+
+#profile-img {
+	border-radius: 100%;
+}
+
+.ui.items .item {
+	font-size: 1.3em;
 }

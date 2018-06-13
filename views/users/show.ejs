@@ -1,7 +1,62 @@
 <% include ../partials/header %>
 
-<div class="ui container">
+<!-- <div class="ui container">
 	<%= JSON.stringify([profile, topArtists, topTracks]) %>
+</div> -->
+
+<% console.log(profile, topArtists, topTracks) %>
+
+<div class="ui grid container">
+	<div class="three column row">
+		<div class="column">
+			<div class="ui items">
+				<div class="item">
+					<div class="image">
+							<% if (profile.images.length > 0) { %>
+								<img id="profile-img" src="<%= profile.images[0].url %>" alt="">
+							<% } %>
+					</div>
+					<div class="content">
+							<a href="" class="header"><%= profile.display_name || profile.id %></a>
+						<div class="meta">
+								<span><%= profile.followers.total %> followers</span>
+						</div>
+						<div class="description">
+							<p><a href="<%= profile.external_urls.spotify %>" target="_blank">View My Profile</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		<div class="column">
+			<h1>Top 50 Tracks</h1>
+			<div class="ui items">
+					<% topTracks.items.forEach(item => { %>
+						<div class="item">
+							<div class="image">
+								<% if (item.album.images.length > 0) { %>
+									<img src="<%= item.album.images[0].url %>" alt="">
+								<% } %>
+							</div>
+							<div class="content">
+								<a href="<%= item.preview_url %>" class="header"><%= item.name %></a>
+								<div class="meta">
+									<span>
+										<% let artists = item.artists.reduce((acc, curr) => acc + ', ' + curr.name, ''); %>
+										<% if (artists) artists = artists.slice(artists.indexOf(',') + 1); %>
+										<%= artists %>
+									</span>
+								</div>
+								<div class="description">
+									<p>Popularity: <%= item.popularity %></p>
+								</div>
+							</div>
+						</div>
+					<% }); %>
+			</div>
+		</div>
+		<div class="column">
+		</div>
+	</div>
 </div>
 
 <% include ../partials/footer %>

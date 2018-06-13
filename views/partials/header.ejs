@@ -16,12 +16,5 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 </head>
 <body>
-	<header>
-		<nav class="ui top fixed inverted borderless menu">
-			  <a href="/" class="item ui huge header">Tastyfi.me</a>
-				<% if (currentUser) { %>
-					<a class="right item" href="/logout">Log Out</a>
-				<% } %>
-		</nav>
-	</header>
+	<% include ./sticky-header %>
 	<main>
