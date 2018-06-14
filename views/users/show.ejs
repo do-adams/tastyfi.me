@@ -10,66 +10,105 @@
 	<div class="six wide column">
 		<div class="user-profile">
 			<div class="ui items">
-					<div class="item">
-						<div class="image">
-								<% if (profile.images.length > 0) { %>
-									<img id="profile-img" src="<%= profile.images[0].url %>" alt="">
-								<% } %>
+				<div class="item">
+					<div class="image">
+							<% if (profile.images.length > 0) { %>
+								<img id="profile-img" src="<%= profile.images[0].url %>" alt="">
+							<% } %>
+					</div>
+					<div class="content">
+						<a href="" class="header"><%= profile.display_name || profile.id %></a>
+						<div class="meta">
+								<span><%= profile.followers.total %> followers</span>
 						</div>
-						<div class="content">
-							<a href="" class="header"><%= profile.display_name || profile.id %></a>
-							<div class="meta">
-									<span><%= profile.followers.total %> followers</span>
-							</div>
-							<div class="description">
-								<p><a href="<%= profile.external_urls.spotify %>" target="_blank">View My Profile</a></p>
-							</div>
+						<div class="description">
+							<p><a href="<%= profile.external_urls.spotify %>" target="_blank">View My Profile</a></p>
 						</div>
 					</div>
+				</div>
 			</div>
 		</div> <!-- end user-profile -->
 	</div> <!-- end first column -->
-	<div class="four wide column">
-		<div class="top-tracks">
-				<div class="ui accordion">
-						<div class="title">
-							<i class="dropdown icon"></i>
-							<span class="ui medium header">Top 50 Tracks</span>
-						</div>
-						<div class="content">
-								<div class="transition hidden ui divided items">
-										<% topTracks.items.forEach(item => { %>
-											<div class="item">
-												<div class="image">
-													<% if (item.album.images.length > 0) { %>
-														<img src="<%= item.album.images[0].url %>" alt="">
-													<% } %>
-												</div>
-												<div class="content">
-													<!-- URI to track expected to be in the format of spotify:track:trackId -->
-													<% let trackUri = item.uri.split(':'); %>
-													<% trackUri = `https://open.${trackUri[0]}.com/${trackUri[1]}/${trackUri[2]}` %>
-													<a href="<%= trackUri %>" class="header"><%= item.name %></a>
-													<div class="meta">
-														<!-- Build the Artists string -->
-														<span>
-															<% let artists = item.artists.reduce((acc, curr) => acc + ', ' + curr.name, ''); %>
-															<% if (artists) artists = artists.slice(artists.indexOf(',') + 2); %>
-															<%= artists %>
-														</span>
-													</div>
-													<div class="description">
-														<p>Popularity: <%= item.popularity %></p>
-													</div>
-												</div>
-											</div>
-										<% }); %>
-								</div>
-						</div>
+	<div class="five wide column">
+		<div class="top-artists">
+			<div class="ui accordion">
+				<div class="title">
+					<i class="dropdown icon"></i>
+					<span class="ui medium header">Top Artists</span>
 				</div>
-		</div> <!-- end top tracks -->
+				<div class="content">
+					<div class="transition hidden ui divided items">
+						<% topArtists.items.forEach(item => { %>
+							<div class="item">
+								<div class="image">
+									<% if (item.images.length > 0) { %>
+										<img src="<%= item.images[0].url %>" alt="">
+									<% } %>
+								</div>
+								<div class="content">
+									<!-- URI to artist expected to be in the format of spotify:artist:artistId -->
+									<% let artistUri = item.uri.split(':'); %>
+									<% artistUri = `https://open.${artistUri[0]}.com/${artistUri[1]}/${artistUri[2]}` %>
+									<a href="<%= artistUri %>" class="header"><%= item.name %></a>
+									<div class="meta">
+										<!-- Build the Genres string -->
+										<span>
+											<% let genres = item.genres.reduce((acc, curr) => acc + ', ' + curr, ''); %>
+											<% if (genres) genres = genres.slice(genres.indexOf(',') + 2); %>
+											<%= genres %>
+										</span>
+									</div>
+									<div class="description">
+										<p>Followers: <%= item.followers.total %></p>
+										<p>Popularity: <%= item.popularity %></p>
+									</div>
+								</div>
+							</div>
+						<% }); %>
+					</div>
+				</div>
+			</div>
+		</div> <!-- end top artists -->
 	</div> <!-- end second column-->
-	<div class="eight wide column">
+	<div class="five wide column">
+		<div class="top-tracks">
+			<div class="ui accordion">
+				<div class="title">
+					<i class="dropdown icon"></i>
+					<span class="ui medium header">Top Tracks</span>
+				</div>
+				<div class="content">
+					<div class="transition hidden ui divided items">
+						<% topTracks.items.forEach(item => { %>
+							<div class="item">
+								<div class="image">
+									<% if (item.album.images.length > 0) { %>
+										<img src="<%= item.album.images[0].url %>" alt="">
+									<% } %>
+								</div>
+								<div class="content">
+									<!-- URI to track expected to be in the format of spotify:track:trackId -->
+									<% let trackUri = item.uri.split(':'); %>
+									<% trackUri = `https://open.${trackUri[0]}.com/${trackUri[1]}/${trackUri[2]}` %>
+									<a href="<%= trackUri %>" class="header"><%= item.name %></a>
+									<div class="meta">
+										<!-- Build the Artists string -->
+										<span>
+											<% let artists = item.artists.reduce((acc, curr) => acc + ', ' + curr.name, ''); %>
+											<% if (artists) artists = artists.slice(artists.indexOf(',') + 2); %>
+											<%= artists %>
+										</span>
+									</div>
+									<div class="description">
+										<p>Popularity: <%= item.popularity %></p>
+									</div>
+								</div>
+							</div>
+						<% }); %>
+					</div>
+				</div>
+			</div>
+		</div> <!-- end top tracks -->
 	</div> <!-- end third column-->
 </div><!-- end container grid-->
 
