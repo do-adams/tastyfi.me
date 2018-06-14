@@ -15,6 +15,10 @@ main {
 	font-size: 1.3em;
 }
 
+.ui.disabled.progress {
+	opacity: 1;
+}
+
 @media all and (max-width: 767px) {
 	main {
 		text-align: center;

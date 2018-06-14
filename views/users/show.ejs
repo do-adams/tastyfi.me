@@ -59,7 +59,10 @@
 									</div>
 									<div class="description">
 										<p>Followers: <%= item.followers.total %></p>
-										<p>Popularity: <%= item.popularity %></p>
+										<p>Popularity:</p>
+										<div class="ui yellow disabled progress" data-percent="<%= item.popularity %>">
+												<div class="bar"></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -98,7 +101,10 @@
 										</span>
 									</div>
 									<div class="description">
-										<p>Popularity: <%= item.popularity %></p>
+										<p>Popularity:</p>
+										<div class="ui orange disabled progress" data-percent="<%= item.popularity %>">
+											<div class="bar"></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -112,6 +118,7 @@
 
 <script>	
 	$('.ui.accordion').accordion('open', 0);
+	$('.ui.progress').progress();
 </script>
 
 <% include ../partials/footer %>
