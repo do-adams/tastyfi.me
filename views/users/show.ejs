@@ -31,39 +31,50 @@
 	</div> <!-- end first column -->
 	<div class="four wide column">
 		<div class="top-tracks">
-			<h2>Top 50 Tracks</h2>
-			<div class="ui divided items">
-				<% topTracks.items.forEach(item => { %>
-					<div class="item">
-						<div class="image">
-							<% if (item.album.images.length > 0) { %>
-								<img src="<%= item.album.images[0].url %>" alt="">
-							<% } %>
+				<div class="ui accordion">
+						<div class="title">
+							<i class="dropdown icon"></i>
+							<span class="ui medium header">Top 50 Tracks</span>
 						</div>
 						<div class="content">
-							<!-- URI to track expected to be in the format of spotify:track:trackId -->
-							<% let trackUri = item.uri.split(':'); %>
-							<% trackUri = `https://open.${trackUri[0]}.com/${trackUri[1]}/${trackUri[2]}` %>
-							<a href="<%= trackUri %>" class="header"><%= item.name %></a>
-							<div class="meta">
-								<!-- Build the Artists string -->
-								<span>
-									<% let artists = item.artists.reduce((acc, curr) => acc + ', ' + curr.name, ''); %>
-									<% if (artists) artists = artists.slice(artists.indexOf(',') + 2); %>
-									<%= artists %>
-								</span>
-							</div>
-							<div class="description">
-								<p>Popularity: <%= item.popularity %></p>
-							</div>
+								<div class="transition hidden ui divided items">
+										<% topTracks.items.forEach(item => { %>
+											<div class="item">
+												<div class="image">
+													<% if (item.album.images.length > 0) { %>
+														<img src="<%= item.album.images[0].url %>" alt="">
+													<% } %>
+												</div>
+												<div class="content">
+													<!-- URI to track expected to be in the format of spotify:track:trackId -->
+													<% let trackUri = item.uri.split(':'); %>
+													<% trackUri = `https://open.${trackUri[0]}.com/${trackUri[1]}/${trackUri[2]}` %>
+													<a href="<%= trackUri %>" class="header"><%= item.name %></a>
+													<div class="meta">
+														<!-- Build the Artists string -->
+														<span>
+															<% let artists = item.artists.reduce((acc, curr) => acc + ', ' + curr.name, ''); %>
+															<% if (artists) artists = artists.slice(artists.indexOf(',') + 2); %>
+															<%= artists %>
+														</span>
+													</div>
+													<div class="description">
+														<p>Popularity: <%= item.popularity %></p>
+													</div>
+												</div>
+											</div>
+										<% }); %>
+								</div>
 						</div>
-					</div>
-				<% }); %>
-			</div>
+				</div>
 		</div> <!-- end top tracks -->
 	</div> <!-- end second column-->
 	<div class="eight wide column">
 	</div> <!-- end third column-->
 </div><!-- end container grid-->
+
+<script>	
+	$('.ui.accordion').accordion('open', 0);
+</script>
 
 <% include ../partials/footer %>
