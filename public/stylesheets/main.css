@@ -6,6 +6,13 @@ main {
 	border-radius: 100%;
 }
 
-.ui.items .item {
+.user-profile .ui.items .item {
 	font-size: 1.3em;
+	word-wrap: break-word;
+}
+
+@media all and (max-width: 767px) {
+	main {
+		text-align: center;
+	}
 }
