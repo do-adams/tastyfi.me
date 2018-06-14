@@ -47,9 +47,8 @@
 								</div>
 								<div class="content">
 									<!-- URI to artist expected to be in the format of spotify:artist:artistId -->
-									<% let artistUri = item.uri.split(':'); %>
-									<% artistUri = `https://open.${artistUri[0]}.com/${artistUri[1]}/${artistUri[2]}` %>
-									<a href="<%= artistUri %>" class="header"><%= item.name %></a>
+									<% let artistUrl = item.external_urls.spotify; %>
+									<a href="<%= artistUrl %>" class="header"><%= item.name %></a>
 									<div class="meta">
 										<!-- Build the Genres string -->
 										<span>
@@ -88,9 +87,8 @@
 								</div>
 								<div class="content">
 									<!-- URI to track expected to be in the format of spotify:track:trackId -->
-									<% let trackUri = item.uri.split(':'); %>
-									<% trackUri = `https://open.${trackUri[0]}.com/${trackUri[1]}/${trackUri[2]}` %>
-									<a href="<%= trackUri %>" class="header"><%= item.name %></a>
+									<% let trackUrl = item.external_urls.spotify; %>
+									<a href="<%= trackUrl %>" class="header"><%= item.name %></a>
 									<div class="meta">
 										<!-- Build the Artists string -->
 										<span>
