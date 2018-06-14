@@ -1,4 +1,9 @@
-main {
+body {
+	background: linear-gradient(to right, rgba(237,237,237,1) 0%, rgba(246,246,246,0.74) 53%, rgba(255,255,255,0.5) 100%),
+							linear-gradient(to right, rgba(239,1,124,1) 0%, rgba(255,93,177,1) 100%);
+}
+
+main {	
 	margin-top: 10em;
 }
 
