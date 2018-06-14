@@ -38,7 +38,7 @@
 				</div>
 				<div class="content">
 					<div class="transition hidden ui divided items">
-						<% topArtists.items.forEach(item => { %>
+						<% topArtists.items.forEach((item, index) => { %>
 							<div class="item">
 								<div class="image">
 									<% if (item.images.length > 0) { %>
@@ -64,6 +64,9 @@
 												<div class="bar"></div>
 										</div>
 									</div>
+									<div class="extra">
+										<i class="trophy icon"></i>No. <%= index + 1 %>
+									</div>
 								</div>
 							</div>
 						<% }); %>
@@ -81,7 +84,7 @@
 				</div>
 				<div class="content">
 					<div class="transition hidden ui divided items">
-						<% topTracks.items.forEach(item => { %>
+						<% topTracks.items.forEach((item, index) => { %>
 							<div class="item">
 								<div class="image">
 									<% if (item.album.images.length > 0) { %>
@@ -104,6 +107,9 @@
 										<p>Popularity:</p>
 										<div class="ui orange disabled progress" data-percent="<%= item.popularity %>">
 											<div class="bar"></div>
+										</div>
+										<div class="extra">
+											<i class="headphones icon"></i>No. <%= index + 1 %>
 										</div>
 									</div>
 								</div>
