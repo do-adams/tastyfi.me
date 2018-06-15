@@ -57,6 +57,14 @@ module.exports = function processAudioFeatures(audioFeaturesResponse) {
 		featureAverages[feature] = sums[feature] / count;
 	});
 
+	// Set the time duration string for convenience purposes
+	const durationInSeconds = featureAverages.duration_ms / 1000;
+	const durationInMinutes = Math.floor(durationInSeconds / 60);
+	let remainingSeconds = Math.round(durationInSeconds % 60);
+	remainingSeconds = remainingSeconds < 10 ? '0' + String(remainingSeconds) : String(remainingSeconds); 
+
+	featureAverages.duration_string = `${durationInMinutes}:${remainingSeconds}`;
+
 	return {
 		tonality: featureTallies,
 		features: featureAverages
