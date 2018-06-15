@@ -3,7 +3,8 @@
 const express = require('express'),
 	User = require('../models/User'),
 	SpotifyService = require('../services/SpotifyService'),
-	refreshAuth = require('../middleware/users/refreshAuth');
+	refreshAuth = require('../middleware/users/refreshAuth'),
+	processAudioFeatures = require('../helpers/processAudioFeatures');
 
 const router = express.Router({mergeParams: true});
 
@@ -61,43 +62,7 @@ router.get('/audio', refreshAuth, async (req, res, next) => {
 			throw new Error(JSON.stringify(audioResponse.body));
 		}
 
-		const analysis = audioResponse.body;
-		const count = analysis.audio_features.length;
-
-		const featureTallies = {
-			keys: new Array(12).fill(0), // Keys are in Pitch Class notation (0-11)
-			modes: new Array(2).fill(0) // 0 - Minor, 1 - Major
-		};
-		const featureSums = analysis.audio_features.reduce((acc, curr) => {
-			// Update tallies
-			featureTallies.keys[curr.key] += 1;
-			featureTallies.modes[curr.mode] += 1;
-
-			// Update sums
-			Object.keys(acc).forEach(feature => {
-				acc[feature] += curr[feature];
-			});
-			return acc;
-		}, {
-			acousticness: 0,
-			danceability: 0,
-			duration_ms: 0,
-			energy: 0,
-			instrumentalness: 0,
-			liveness: 0,
-			tempo: 0,
-			valence: 0
-		});
-
-		const featureAverages = {};
-		Object.keys(featureSums).forEach((feature) => {
-			featureAverages[feature] = featureSums[feature] / count;
-		});
-
-		return res.json({
-			feature_tallies : featureTallies,
-			feature_averages: featureAverages
-		});
+		return res.json(processAudioFeatures(audioResponse));
 	} catch (err) {
 		return next(err);
 	}
