@@ -58,7 +58,7 @@ module.exports = function processAudioFeatures(audioFeaturesResponse) {
 	});
 
 	return {
-		featureTallies,
-		featureAverages
+		tonality: featureTallies,
+		features: featureAverages
 	};
 };
