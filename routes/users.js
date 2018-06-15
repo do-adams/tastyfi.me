@@ -32,37 +32,20 @@ router.get('/', refreshAuth, async (req, res, next) => {
 				throw new Error(JSON.stringify(response.body));
 			}
 		});
-
-		return res.render('users/show', {
-			profile: responses[0].body,
-			topArtists: responses[1].body,
-			topTracks: responses[2].body
-		});
-	} catch (err) {
-		return next(err);
-	}
-});
-
-router.get('/audio', refreshAuth, async (req, res, next) => {
-	try {
-		const user = await User.findById(req.params.id);
-		if (!user) {
-			throw new Error('User not found');
-		}
-		const trackResponse = await SpotifyService.getTopTracks(user.access.accessToken, {
-			limit: '50',
-			time_range: 'long_term'
-		});
-		if (trackResponse.statusCode !== 200) {
-			throw new Error(JSON.stringify(trackResponse.body));
-		}
-		const topTracks = trackResponse.body.items.map(i => i.id);
+		// Get audio features analysis
+		const topTracks = responses[2].body.items.map(i => i.id);
 		const audioResponse = await SpotifyService.getAudioFeatures(user.access.accessToken, topTracks);
 		if (audioResponse.statusCode !== 200) {
 			throw new Error(JSON.stringify(audioResponse.body));
 		}
-
-		return res.json(processAudioFeatures(audioResponse));
+		const audioFeatures = processAudioFeatures(audioResponse);
+		
+		return res.render('users/show', {
+			profile: responses[0].body,
+			topArtists: responses[1].body,
+			topTracks: responses[2].body,
+			audioFeatures
+		});
 	} catch (err) {
 		return next(err);
 	}
