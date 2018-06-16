@@ -7,10 +7,6 @@ main {
 	margin-top: 10em;
 }
 
-#profile-img {
-	border-radius: 100%;
-}
-
 .user-profile .ui.items .item {
 	font-size: 1.3em;
 }
