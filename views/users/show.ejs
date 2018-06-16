@@ -1,9 +1,5 @@
 <% include ../partials/header %>
 
-<!-- <div class="ui container">
-	<%= JSON.stringify([profile, topArtists, topTracks]) %>
-</div> -->
-
 <% console.log(profile, topArtists, topTracks, audioFeatures) %>
 
 <div class="ui relaxed grid container">
@@ -17,12 +13,17 @@
 							<% } %>
 					</div>
 					<div class="content">
-						<a href="" class="header"><%= profile.display_name || profile.id %></a>
+						<span class="header"><%= profile.display_name || profile.id %></span>
 						<div class="meta">
 								<span><%= profile.followers.total %> followers</span>
 						</div>
 						<div class="description">
-							<p><a href="<%= profile.external_urls.spotify %>" target="_blank">View My Profile</a></p>
+							<a href="<%= profile.external_urls.spotify %>" target="_blank">
+								<button class="ui black button">
+									<i class="spotify icon"></i>
+									Follow Me
+								</button>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -72,7 +73,7 @@
 						</div>
 					</div>
 				</div>
-				<h3 class="ui header">Likes</h3>
+				<h3 class="ui header">LIKES</h3>
 				<div class="ui big list">
 					<% if (audioFeatures.features.acousticness > 0.5) { %>
 						<div class="item">acousticness</div>
