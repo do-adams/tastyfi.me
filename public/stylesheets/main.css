@@ -15,6 +15,10 @@ main {
 	font-size: 1.3em;
 }
 
+.audio-features {
+	margin-top: 2em;
+}
+
 .ui.disabled.progress {
 	opacity: 1;
 }
@@ -22,5 +26,9 @@ main {
 @media all and (max-width: 767px) {
 	main {
 		text-align: center;
+	}
+	
+	.ui.statistics {
+		justify-content: center;
 	}
 }
