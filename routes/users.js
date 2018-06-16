@@ -19,11 +19,11 @@ router.get('/', refreshAuth, async (req, res, next) => {
 			SpotifyService.getUserProfile(user.spotifyId, user.access.accessToken),
 			SpotifyService.getTopArtists(user.access.accessToken, {
 				limit: '50',
-				time_range: 'long_term'
+				time_range: 'short_term'
 			}),
 			SpotifyService.getTopTracks(user.access.accessToken, {
 				limit: '50',
-				time_range: 'long_term'
+				time_range: 'short_term'
 			})
 		]);
 		// Check responses
@@ -39,7 +39,7 @@ router.get('/', refreshAuth, async (req, res, next) => {
 			throw new Error(JSON.stringify(audioResponse.body));
 		}
 		const audioFeatures = processAudioFeatures(audioResponse);
-		
+
 		return res.render('users/show', {
 			profile: responses[0].body,
 			topArtists: responses[1].body,
