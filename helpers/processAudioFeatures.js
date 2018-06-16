@@ -19,6 +19,8 @@ module.exports = function processAudioFeatures(audioFeaturesResponse) {
 	};
 
 	const sums = data.audio_features.reduce((acc, curr) => {
+		if (!curr) return acc;
+
 		// Update tallies
 		tallies.keys[curr.key] += 1;
 		tallies.modes[curr.mode] += 1;
@@ -35,6 +37,7 @@ module.exports = function processAudioFeatures(audioFeaturesResponse) {
 		energy: 0,
 		instrumentalness: 0,
 		liveness: 0,
+		loudness: -60,
 		tempo: 0,
 		valence: 0
 	});
