@@ -1,101 +1,105 @@
 <% include ../partials/header %>
 
-<% console.log(profile, topArtists, topTracks, audioFeatures) %>
-
 <div class="ui relaxed grid container">
 	<div class="sixteen wide six wide computer column">
-		<div class="user-profile">
-			<div class="ui items">
-				<div class="item">
-					<div class="image">
-							<% if (profile.images.length > 0) { %>
-								<img id="profile-img" src="<%= profile.images[0].url %>" alt="">
-							<% } %>
-					</div>
-					<div class="content">
-						<span class="header"><%= profile.display_name || profile.id %></span>
-						<div class="meta">
-								<span><%= profile.followers.total %> followers</span>
-						</div>
-						<div class="description">
-							<a href="<%= profile.external_urls.spotify %>" target="_blank">
-								<button class="ui black button">
-									<i class="spotify icon"></i>
-									Follow Me
-								</button>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> <!-- end user-profile -->
-		<div class="audio-features">
-			<% if (audioFeatures) { %>
-				<div class="ui mini statistics">
-					<div class="statistic">
-						<div class="value">
-							<%= audioFeatures.features.duration_string %>
-						</div>
-						<div class="label">
-							Average Track Duration
-						</div>
-					</div>
-					<div class="statistic">
-						<div class="value">
-							<%= Math.round(audioFeatures.features.tempo) %>
-						</div>
-						<div class="label">
-							Average Track Tempo
-						</div>
-					</div>
-					<div class="statistic">
-						<div class="value">
-							<div class="ui large horizontal divided list">
-								<% audioFeatures.tonality.keys.forEach(key => { %>
-									<div class="item">
-										<div class="content">
-											<div class="header"><%= key.tone %></div>
-										</div>
-									</div>
-								<% }); %>
+		<div class="ui grid">
+			<div class="sixteen wide mobile eight wide tablet sixteen wide computer column">
+				<div class="user-profile">
+					<div class="ui items">
+						<div class="item">
+							<div class="image">
+								<% if (profile.images.length > 0) { %>
+									<img id="profile-img" src="<%= profile.images[0].url %>" alt="">
+								<% } %>
+							</div>
+							<div class="content">
+								<span class="header"><%= profile.display_name || profile.id %></span>
+								<div class="meta">
+									<span><%= profile.followers.total %> followers</span>
+								</div>
+								<div class="description">
+									<a href="<%= profile.external_urls.spotify %>" target="_blank">
+										<button class="ui black button">
+											<i class="spotify icon"></i>
+											Follow Me
+										</button>
+									</a>
+								</div>
 							</div>
 						</div>
-						<div class="label">
-							Favorite Keys
-						</div>
 					</div>
-					<div class="statistic">
-						<div class="value">
-							<%= audioFeatures.tonality.mode %>
+				</div> <!-- end user-profile -->
+			</div><!-- end first nested column-->
+			<div class="sixteen wide mobile eight wide tablet sixteen wide computer column">
+				<div class="audio-features">
+					<% if (audioFeatures) { %>
+						<div class="ui mini statistics">
+							<div class="statistic">
+								<div class="value">
+									<%= audioFeatures.features.duration_string %>
+								</div>
+								<div class="label">
+									Average Track Duration
+								</div>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<%= Math.round(audioFeatures.features.tempo) %>
+								</div>
+								<div class="label">
+									Average Track Tempo
+								</div>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<div class="ui large horizontal divided list">
+										<% audioFeatures.tonality.keys.forEach(key => { %>
+											<div class="item">
+												<div class="content">
+													<div class="header"><%= key.tone %></div>
+												</div>
+											</div>
+										<% }); %>
+									</div>
+								</div>
+								<div class="label">
+									Favorite Keys
+								</div>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<%= audioFeatures.tonality.mode %>
+								</div>
+								<div class="label">
+									Favorite Mode
+								</div>
+							</div>
 						</div>
-						<div class="label">
-							Favorite Mode
+						<h3 class="ui header">LIKES</h3>
+						<div class="ui big list">
+							<% if (audioFeatures.features.acousticness > 0.5) { %>
+								<div class="item">acousticness</div>
+							<% } %>
+							<% if (audioFeatures.features.danceability > 0.5) { %>
+								<div class="item">danceability</div>
+							<% } %>
+							<% if (audioFeatures.features.energy > 0.5) { %>
+								<div class="item">energy</div>
+							<% } %>
+							<% if (audioFeatures.features.instrumentalness > 0.5) { %>
+								<div class="item">instrumentalness</div>
+							<% } %>
+							<% if (audioFeatures.features.liveness > 0.5) { %>
+								<div class="item">liveness</div>
+							<% } %>
+							<% if (audioFeatures.features.valence > 0.5) { %>
+								<div class="item">valence</div>
+							<% } %>
 						</div>
-					</div>
-				</div>
-				<h3 class="ui header">LIKES</h3>
-				<div class="ui big list">
-					<% if (audioFeatures.features.acousticness > 0.5) { %>
-						<div class="item">acousticness</div>
 					<% } %>
-					<% if (audioFeatures.features.danceability > 0.5) { %>
-						<div class="item">danceability</div>
-					<% } %>
-					<% if (audioFeatures.features.energy > 0.5) { %>
-						<div class="item">energy</div>
-					<% } %>
-					<% if (audioFeatures.features.instrumentalness > 0.5) { %>
-						<div class="item">instrumentalness</div>
-					<% } %>
-					<% if (audioFeatures.features.liveness > 0.5) { %>
-						<div class="item">liveness</div>
-					<% } %>
-					<% if (audioFeatures.features.valence > 0.5) { %>
-						<div class="item">valence</div>
-					<% } %>
-				</div>
-			<% } %>
-		</div><!-- end audio-features-->
+				</div><!-- end audio-features-->
+			</div><!-- end second nested column-->
+		</div><!-- end nested grid-->
 	</div> <!-- end first column -->
 	<div class="eight wide mobile five wide computer column">
 		<div class="top-artists">
