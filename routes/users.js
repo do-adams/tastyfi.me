@@ -14,16 +14,26 @@ router.get('/', refreshAuth, async (req, res, next) => {
 		if (!user) {
 			throw new Error('User not found.');
 		}
+
+		// Parse query string
+		const ranges = ['short_term', 'medium_term', 'long_term'];
+		let timeRange = req.query.time_range;
+		if (!timeRange) {
+			timeRange = ranges[0];
+		} else if (!ranges.includes(timeRange)) {
+			throw new Error('Invalid time range value');
+		}
+
 		// Request data from Spotify concurrently
 		const responses = await Promise.all([
 			SpotifyService.getUserProfile(user.spotifyId, user.access.accessToken),
 			SpotifyService.getTopArtists(user.access.accessToken, {
 				limit: '50',
-				time_range: 'short_term'
+				time_range: timeRange
 			}),
 			SpotifyService.getTopTracks(user.access.accessToken, {
 				limit: '50',
-				time_range: 'short_term'
+				time_range: timeRange
 			})
 		]);
 		// Check responses
