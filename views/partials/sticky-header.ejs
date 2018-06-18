@@ -1,8 +1,13 @@
 <header>
 	<nav class="ui top fixed inverted borderless menu">
 			<a href="/" class="item ui huge header">Tastyfi.me</a>
-			<% if (currentUser) { %>
-				<a class="right item" href="/logout">Log Out</a>
-			<% } %>
+			<div class="right menu">
+				<a href="" class="item"><i class="share alternate icon"></i>Share</a>
+				<% if (currentUser) { %>
+					<a class="item" href="/logout">Log Out</a>
+				<% } else { %>
+					<a href="/auth/spotify" class="item">Sign Up</a>
+				<% } %>
+			</div>
 	</nav>
 </header>
