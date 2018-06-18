@@ -94,6 +94,10 @@ passport.deserializeUser(function(id, done) {
 
 // RESPONSE LEVEL VARIABLES MIDDLEWARE
 app.use((req, res, next) => {
+	res.locals.request = {
+		url: req.url,
+		query: req.query
+	};
 	res.locals.currentUser = req.user;
 	res.locals.error = req.flash('error');
 	res.locals.success = req.flash('success');

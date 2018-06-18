@@ -1,7 +1,25 @@
 <% include ../partials/header %>
 
+<% const timeRange = request.query.time_range; %>
+<% const getActivityLevel = range => { %> 
+	<% if (!timeRange && range === 'short_term') {  %>
+		<% return 'active section'; %>
+	<% } else { %>
+		<% return timeRange === range ? 'active section' : 'section'; %>
+	<% } %>
+<% }; %>
+
 <div class="ui relaxed grid container">
-	<div class="sixteen wide six wide computer column">
+	<div id="breadcrumb-container" class="sixteen wide column">
+		<div class="ui breadcrumb">
+			<a href="?time_range=short_term" class="<%= getActivityLevel('short_term') %>">Last Four Weeks</a>
+			<div class="divider"> / </div>
+			<a href="?time_range=medium_term" class="<%= getActivityLevel('medium_term') %>">Last Six Months</a>
+			<div class="divider"> / </div>
+			<a href="?time_range=long_term" class="<%= getActivityLevel('long_term') %>">The Beginning of Time</a>
+		</div>
+	</div><!-- end first column -->
+	<div class="sixteen wide mobile six wide computer column">
 		<div class="ui grid">
 			<div class="sixteen wide mobile eight wide tablet sixteen wide computer column">
 				<div class="user-profile">
@@ -107,7 +125,7 @@
 				</div><!-- end audio-features-->
 			</div><!-- end second nested column-->
 		</div><!-- end nested grid-->
-	</div> <!-- end first column -->
+	</div> <!-- end second column -->
 	<div class="eight wide mobile five wide computer column">
 		<div class="top-artists">
 			<div class="ui accordion">
@@ -153,7 +171,7 @@
 				</div>
 			</div>
 		</div> <!-- end top artists -->
-	</div> <!-- end second column-->
+	</div> <!-- end third column-->
 	<div class="eight wide mobile five wide computer column">
 		<div class="top-tracks">
 			<div class="ui accordion">
@@ -198,11 +216,13 @@
 				</div>
 			</div>
 		</div> <!-- end top tracks -->
-	</div> <!-- end third column-->
+	</div> <!-- end fourth column-->
 </div><!-- end container grid-->
 
-<script>	
+<script>
+	// Open accordions	
 	$('.ui.accordion').accordion('open', 0);
+	// Initialize the progress bars
 	$('.ui.progress').progress();
 </script>
 
