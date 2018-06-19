@@ -24,9 +24,14 @@ mongoose.connect(dbUrl, function(err) {
 
 // GENERAL EXPRESS SETUP
 app.set('view engine', 'ejs');
+
+// STATIC FILES SERVER SETUP
 const publicPath = path.resolve(__dirname, 'public');
 app.use(express.static(publicPath));
-app.use(express.urlencoded({extended: true})); // bodyparser
+const distPath = path.resolve(__dirname, 'node_modules', 'clipboard', 'dist');
+app.use('/dist', express.static(distPath)); // DIST DIR FOR CLIPBOARD.JS
+
+app.use(express.urlencoded({extended: true})); // ADD BODYPARSER
 
 // SESSION SETUP
 app.use(session({

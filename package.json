@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/do-adams/tastyfi.me#readme",
   "dependencies": {
+    "clipboard": "^2.0.1",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^2.0.1",
     "dotenv": "^5.0.1",

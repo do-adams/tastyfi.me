@@ -1,5 +1,17 @@
 	</main>
 	<footer>
 	</footer>
+	<script>
+		// Set share button clipboard and modal functionality
+		const shareBtn = '#share-btn';
+		new ClipboardJS(shareBtn, {
+				text: function(trigger) {
+						return window.location.href;
+				}
+		});
+		$(shareBtn).on('click', function() {
+			$('.ui.mini.modal').modal('show');
+		});
+	</script>
 </body>
 </html>
