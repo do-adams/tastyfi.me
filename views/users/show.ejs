@@ -1,6 +1,7 @@
+<% const headStyles = ['<link rel="stylesheet" type="text/css" href="/stylesheets/users.css">']; %>
 <% const headScripts = [ '<script src="/dist/clipboard.min.js"></script>' ]; %>
 
-<%- include('../partials/header', {scripts: headScripts}); %>
+<%- include('../partials/header', {stylesheets: headStyles, scripts: headScripts}); %>
 
 <% const timeRange = request.query.time_range; %>
 <% const getActivityLevel = range => { %> 

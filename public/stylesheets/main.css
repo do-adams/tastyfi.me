@@ -6,39 +6,3 @@ body {
 main {	
 	margin-top: 10em;
 }
-
-.user-profile .ui.items .item {
-	font-size: 1.3em;
-}
-
-.ui.disabled.progress {
-	opacity: 1;
-}
-
-/* Center all content in mobile devices */
-@media all and (max-width: 767px) {
-	main {
-		text-align: center;
-	}
-
-	.ui.statistics {
-		justify-content: center;
-	}
-}
-
-/* Center only audio features content in tablet devices */
-@media all and (min-width: 768px) and (max-width: 991px) {
-	.audio-features {
-		text-align: center;
-	}
-	
-	.ui.statistics {
-		justify-content: center;
-	}
-}
-
-@media all and (min-width: 768px) {
-	#breadcrumb-container {
-		text-align: right;
-	}
-}
