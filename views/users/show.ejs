@@ -1,4 +1,6 @@
-<% include ../partials/header %>
+<% const headScripts = [ '<script src="/dist/clipboard.min.js"></script>' ]; %>
+
+<%- include('../partials/header', {scripts: headScripts}); %>
 
 <% const timeRange = request.query.time_range; %>
 <% const getActivityLevel = range => { %> 
@@ -219,11 +221,12 @@
 	</div> <!-- end fourth column-->
 </div><!-- end container grid-->
 
+<% const usersScript = `
 <script>
 	// Open accordions	
 	$('.ui.accordion').accordion('open', 0);
 	// Initialize the progress bars
 	$('.ui.progress').progress();
-</script>
+</script>`; %>
 
-<% include ../partials/footer %>
+<%- include('../partials/footer', {scripts: [usersScript]}) %>
