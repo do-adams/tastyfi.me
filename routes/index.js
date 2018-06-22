@@ -8,4 +8,9 @@ router.get('/', (req, res) => {
 	return res.render('landing');
 });
 
+router.get('/logout', (req, res) => {
+	req.logout();
+	return res.redirect('/');
+});
+
 module.exports = router;
