@@ -6,3 +6,18 @@ body {
 main {	
 	margin-top: 10em;
 }
+
+/* Adjust the menu size for small and medium mobile devices */
+@media all and (min-width: 320px) and (max-width: 424px) {
+	main {
+		margin-top: 7em;
+	}
+
+	.ui.menu .header {
+		font-size: 1.5em;
+	}
+	
+	.ui.menu .item:not(.header) {
+		font-size: 0.75em;
+	}
+}
