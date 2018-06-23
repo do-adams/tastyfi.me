@@ -1,7 +1,6 @@
-<% const headStyles = ['<link rel="stylesheet" type="text/css" href="/stylesheets/users.css">']; %>
-<% const headScripts = [ '<script src="/dist/clipboard.min.js"></script>' ]; %>
+<% const showStyles = ['<link rel="stylesheet" type="text/css" href="/stylesheets/users/show.css">']; %>
 
-<%- include('../partials/header', {stylesheets: headStyles, scripts: headScripts}); %>
+<%- include('../partials/header', {stylesheets: showStyles}); %>
 
 <% const timeRange = request.query.time_range; %>
 <% const getActivityLevel = range => { %> 
@@ -222,7 +221,7 @@
 	</div> <!-- end fourth column-->
 </div><!-- end container grid-->
 
-<% const usersScript = `
+<% const setShowUi = `
 <script>
 	// Open accordions	
 	$('.ui.accordion').accordion('open', 0);
@@ -230,4 +229,4 @@
 	$('.ui.progress').progress();
 </script>`; %>
 
-<%- include('../partials/footer', {scripts: [usersScript]}) %>
+<%- include('../partials/footer', {scripts: [setShowUi]}) %>

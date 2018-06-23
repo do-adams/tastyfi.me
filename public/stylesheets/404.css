@@ -1,0 +1,47 @@
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+
+	color: white;
+	text-align: center;
+	background-color: black;
+
+	background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(255, 255, 255, 0.1)), 
+	url('../images/404-pug.jpg');
+	background-position: center, 
+	center;
+	background-size: cover, 
+	cover;
+	background-repeat: no-repeat, 
+	no-repeat;
+}
+
+p {
+	padding-top: 3em;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+/* Queries for Landscape mode on Mobiles */
+
+@media all and (min-width: 320px)
+					 and (max-width: 823px)
+					 and (orientation: landscape) {
+	p {
+			padding-top: 0em;
+			font-size: 1.5em;
+		}
+}
+
+@media all and (min-width: 320px)
+					 and (max-width: 374px) {
+  p {
+		padding-top: 2em;
+		font-size: 1.5em;
+	}
+}

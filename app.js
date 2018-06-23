@@ -118,6 +118,11 @@ app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/users/:id', usersRoutes);
 
+// 404 HANDLER
+app.use((req, res) => {
+	return res.render('404');
+});
+
 // ERROR HANDLING MIDDLEWARE
 app.use((err, req, res, next) => {
 		console.error(err.stack);
