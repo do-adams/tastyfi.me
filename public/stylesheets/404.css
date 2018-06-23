@@ -21,7 +21,15 @@ body {
 	no-repeat;
 }
 
-p {
+#share-btn {
+	visibility: hidden;
+}
+
+footer {
+	display: none;
+}
+
+main p {
 	padding-top: 3em;
 	font-size: 2em;
 	font-weight: bold;
@@ -32,7 +40,7 @@ p {
 @media all and (min-width: 320px)
 					 and (max-width: 823px)
 					 and (orientation: landscape) {
-	p {
+	main p {
 			padding-top: 0em;
 			font-size: 1.5em;
 		}
@@ -40,7 +48,7 @@ p {
 
 @media all and (min-width: 320px)
 					 and (max-width: 374px) {
-  p {
+  main p {
 		padding-top: 2em;
 		font-size: 1.5em;
 	}

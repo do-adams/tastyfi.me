@@ -1,10 +1,24 @@
 body {
 	background: linear-gradient(to right, rgba(237,237,237,1) 0%, rgba(246,246,246,0.74) 53%, rgba(255,255,255,0.5) 100%),
 							linear-gradient(to right, rgba(239,1,124,1) 0%, rgba(255,93,177,1) 100%);
+	display: flex;
+	flex-direction: column;
+}
+
+.content {
+	flex: 1 0 auto;
 }
 
 main {	
 	padding-top: 10em;
+}
+
+footer {
+	flex-shrink: 0;
+	font-size: 0.85em;
+	text-align: center;
+	margin-top: 5em;
+	padding-bottom: 1em;
 }
 
 /* Adjust the menu size for small and medium mobile devices */

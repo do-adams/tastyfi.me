@@ -31,32 +31,33 @@
 	<% } %>
 </head>
 <body>
-	<header>
-		<!-- Modal will be invisible unless toggled by user -->
-		<div class="ui mini modal">
-			<div class="header">This profile's URL has been added to your clipboard</div>
-			<div class="image content">
-				<div class="description">
-					<p>Feel free to share it with your friends!</p>
-				</div>
-			</div>
-			<div class="actions">
-					<div class="ui positive right labeled icon button">
-						Okay
-						<i class="checkmark icon"></i>
+	<div class="content">
+		<header>
+			<!-- Modal will be invisible unless toggled by user -->
+			<div class="ui mini modal">
+				<div class="header">This profile's URL has been added to your clipboard</div>
+				<div class="image content">
+					<div class="description">
+						<p>Feel free to share it with your friends!</p>
 					</div>
 				</div>
-		</div>
-		<nav class="ui top fixed inverted borderless menu">
-				<a href="/" class="item ui huge header">Tastyfi.me</a>
-				<div class="right menu">
-					<a id="share-btn" class="item"><i class="share alternate icon"></i>Share</a>
-					<% if (currentUser) { %>
-						<a class="item" href="/logout"><i class="power off icon"></i>Log Out</a>
-					<% } else { %>
-						<a href="/auth/spotify" class="item"><i class="lemon icon"></i>Sign Up</a>
-					<% } %>
-				</div>
-		</nav>
-	</header>
-	<main>
+				<div class="actions">
+						<div class="ui positive right labeled icon button">
+							Okay
+							<i class="checkmark icon"></i>
+						</div>
+					</div>
+			</div>
+			<nav class="ui top fixed inverted borderless menu">
+					<a href="/" class="item ui huge header">Tastyfi.me</a>
+					<div class="right menu">
+						<a id="share-btn" class="item"><i class="share alternate icon"></i>Share</a>
+						<% if (currentUser) { %>
+							<a class="item" href="/logout"><i class="power off icon"></i>Log Out</a>
+						<% } else { %>
+							<a href="/auth/spotify" class="item"><i class="lemon icon"></i>Sign Up</a>
+						<% } %>
+					</div>
+			</nav>
+		</header>
+		<main>
