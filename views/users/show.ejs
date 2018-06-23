@@ -147,7 +147,7 @@
 								<div class="content">
 									<!-- URI to artist expected to be in the format of spotify:artist:artistId -->
 									<% let artistUrl = item.external_urls.spotify; %>
-									<a href="<%= artistUrl %>" class="header"><%= item.name %></a>
+									<a href="<%= artistUrl %>" class="header" target="_blank"><%= item.name %></a>
 									<div class="meta">
 										<!-- Build the Genres string -->
 										<span>
@@ -193,7 +193,7 @@
 								<div class="content">
 									<!-- URI to track expected to be in the format of spotify:track:trackId -->
 									<% let trackUrl = item.external_urls.spotify; %>
-									<a href="<%= trackUrl %>" class="header"><%= item.name %></a>
+									<a href="<%= trackUrl %>" class="header" target="_blank"><%= item.name %></a>
 									<div class="meta">
 										<!-- Build the Artists string -->
 										<span>
