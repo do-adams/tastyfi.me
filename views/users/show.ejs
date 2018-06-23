@@ -35,7 +35,7 @@
 							<div class="content">
 								<span class="header"><%= profile.display_name || profile.id %></span>
 								<div class="meta">
-									<span><%= profile.followers.total %> followers</span>
+									<span><%= parseInt(profile.followers.total).toLocaleString() %> followers</span>
 								</div>
 								<div class="description">
 									<a href="<%= profile.external_urls.spotify %>" target="_blank">
@@ -157,7 +157,7 @@
 										</span>
 									</div>
 									<div class="description">
-										<p>Followers: <%= item.followers.total %></p>
+										<p>Followers: <%= parseInt(item.followers.total).toLocaleString() %></p>
 										<p>Popularity:</p>
 										<div class="ui yellow disabled progress" data-percent="<%= item.popularity %>">
 												<div class="bar"></div>
