@@ -20,7 +20,7 @@ See the [Spotify Developers](https://developer.spotify.com/) website for informa
 
 ##### 3. Environment Variables
 
-Tastyfi.me uses the [dotenv](https://www.npmjs.com/package/dotenv) Node module so you can create a `.env` file in the project directory with the following key-value pairs:
+Tastyfi.me uses the [dotenv](https://www.npmjs.com/package/dotenv) Node module so you must create a `.env` file in the project directory with the following key-value pairs:
 
 ```
 # Application Variables
@@ -34,7 +34,7 @@ CLIENT_ID=<spotify_client_id>
 CLIENT_SECRET=<spotify_client_secret>
 REDIRECT_URI=<redirect_uri_for_spotify_authentication>
 ```
-Tastyfi.me already comes with preconfigured runtime values for Application Variables. **You'll just need to provide the Spotify Variables values for a local instance**.
+Tastyfi.me already comes with preconfigured runtime values for Application Variables. **You'll just need to provide the Spotify Variables values if you're only interested in deploying to a local instance**.
 
 ##### 4. How to Deploy:
 
