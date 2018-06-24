@@ -53,4 +53,4 @@ This repository already contains the compiled Semantic UI files in version contr
 4. Run `cd public/semantic`
 5. Run `gulp build` to build the Semantic UI files
 
-For more information on Semantic UI, see [Getting Started with Semantic UI](https://semantic-ui.com/introduction/getting-started.html).
+For more information on installing and using Semantic UI, see [Getting Started with Semantic UI](https://semantic-ui.com/introduction/getting-started.html).
