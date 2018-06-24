@@ -48,15 +48,16 @@ Tastyfi.me already comes with preconfigured runtime values for Application Varia
 5. Run `npm start`
 6. Open a browser window and visit http://localhost:3000/
 
-##### Optional: Building Semantic UI
+##### Optional: Building Semantic UI with Gulp
 
-This repository already contains the compiled Semantic UI files in version control under the `public/semantic` directory, but in case of an upgrade or a fresh build, follow these instructions:
+This repository intentionally contains the compiled Semantic UI files in version control under the `public/semantic` directory, but in case of an upgrade or a fresh build, follow these instructions:
 
 1. Open a Terminal in the project directory
-2. Run `gulp install`
-3. Set the installation directory to `public/semantic` when prompted by Gulp
-4. Run `cd public/semantic`
-5. Run `gulp build` to build the Semantic UI files
+2. Run `cd node_modules/semantic-ui` to open the semantic-ui package directory
+3. Run `gulp install` and perform an 'Express' installation.
+4. Set the installation directory to `public/semantic` when prompted by Gulp
+5. Run `cd public/semantic`
+6. Run `gulp build` to build the Semantic UI distribution files
 
 For more information on installing and using Semantic UI, see [Getting Started with Semantic UI](https://semantic-ui.com/introduction/getting-started.html).
 
