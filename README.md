@@ -14,7 +14,7 @@ You'll need a computer with the following software installed:
 
 ##### 2. Spotify Credentials
 
-You'll need to have a registered Developer Account with Spotify and a valid **Client ID** and **Client Secret**. Your web application registration must be set up to use the **Authorization Code Flow** [scheme](https://developer.spotify.com/documentation/general/guides/authorization-guide/).
+You'll need to have a registered Developer Account with Spotify and a valid **Client ID** and **Client Secret**. Your web application registration must be set up to use the **Authorization Code Flow** OAuth 2.0 [scheme](https://developer.spotify.com/documentation/general/guides/authorization-guide/).
 
 See the [Spotify Developers](https://developer.spotify.com/) website for information on how to do this.
 
@@ -34,6 +34,9 @@ CLIENT_ID=<spotify_client_id>
 CLIENT_SECRET=<spotify_client_secret>
 REDIRECT_URI=<redirect_uri_for_spotify_authentication>
 ```
+
+The `REDIRECT_URI` should be the same as the Redirect URI registered with your Spotify application.
+
 Tastyfi.me already comes with preconfigured runtime values for Application Variables. **You'll just need to provide the Spotify Variables values if you're only interested in deploying to a local instance**.
 
 ##### 4. How to Deploy:
