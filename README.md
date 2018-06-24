@@ -5,6 +5,8 @@ A web app for revealing a user's (good) taste in music with Spotify.
 ### Getting Started
 
 ##### 1. System Requirements:
+
+You'll need a computer with the following software installed:
 * Node.js
 * npm
 * Gulp (optional)
@@ -32,7 +34,7 @@ CLIENT_ID=<spotify_client_id>
 CLIENT_SECRET=<spotify_client_secret>
 REDIRECT_URI=<redirect_uri_for_spotify_authentication>
 ```
-Tastyfi.me already comes with preconfigured runtime values for Application Variables. You'll just need to provide the Spotify Variables values for a local instance.
+Tastyfi.me already comes with preconfigured runtime values for Application Variables. **You'll just need to provide the Spotify Variables values for a local instance**.
 
 ##### 4. How to Deploy:
 
