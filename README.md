@@ -56,3 +56,5 @@ This repository already contains the compiled Semantic UI files in version contr
 5. Run `gulp build` to build the Semantic UI files
 
 For more information on installing and using Semantic UI, see [Getting Started with Semantic UI](https://semantic-ui.com/introduction/getting-started.html).
+
+**Note: This project uses a CDN resource for the required jQuery file for Semantic UI. If you're upgrading the Semantic UI version you might need to also upgrade to a newer version of jQuery in your landing and partial view files.**
