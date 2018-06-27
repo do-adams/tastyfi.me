@@ -13,6 +13,10 @@ main {
 	padding-top: 10em;
 }
 
+.app-messages {
+	margin-bottom: 2em;
+}
+
 footer {
 	flex-shrink: 0;
 	font-size: 0.85em;

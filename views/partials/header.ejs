@@ -61,3 +61,15 @@
 			</nav>
 		</header>
 		<main>
+			<% if (error && error.length > 0) { %>
+				<section class="ui container app-messages">
+					<div class="ui negative message">
+							<i class="close icon"></i>
+							<div class="header">
+								Yikes! Something went wrong...
+							</div>
+							<% console.log(error) %>
+							<p><%= error %></p>
+						</div>
+				</section>
+			<% } %>

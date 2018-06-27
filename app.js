@@ -127,7 +127,6 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
 		console.error(err.stack);
 		req.flash('error', err.message);
-		res.status(500);
 		res.redirect('back');
 });
 

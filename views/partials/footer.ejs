@@ -14,6 +14,13 @@
 		$(shareBtn).on('click', function() {
 			$('.ui.mini.modal').modal('show');
 		});
+		// Set dismissable action for messages
+		$('.message .close')
+			.on('click', function() {
+				$(this)
+					.closest('.message')
+					.transition('fade');
+			});
 	</script>
 	<!-- Add scripts from rendered view-->
 	<% if (typeof scripts === 'object') { %>
