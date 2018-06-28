@@ -8,7 +8,7 @@ function authRouter(passport) {
 	router.get('/spotify', passport.authenticate('spotify', { scope: ['user-top-read'] }));
 
 	router.get('/spotify/callback', 
-		passport.authenticate('spotify', { scope: ['user-top-read'], failureRedirect: '/' }), 
+		passport.authenticate('spotify', { scope: ['user-top-read'], failureRedirect: '/', failureFlash: true }), 
 		(req, res) => {
 			return res.redirect(`/users/${req.user._id}`);
 		}

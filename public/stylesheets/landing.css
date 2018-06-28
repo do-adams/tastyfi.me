@@ -22,8 +22,13 @@ body {
 	no-repeat;
 }
 
-main {
-	padding-top: 10em;
+header {
+	padding-top: 7em;
+}
+
+.ui.negative.message {
+	margin-top: -2em;
+	margin-bottom: 2em;
 }
 
 #logo {
@@ -40,23 +45,9 @@ main {
 	margin-bottom: 2em;
 }
 
-/* Queries for Landscape mode on Mobiles */
-
-@media all and (min-width: 320px)
-					 and (max-width: 768px)
-					 and (orientation: landscape) {
-	main {
-		padding-top: 3em;
-	}
-}
-
 /* Media Queries for Larger Devices */
 
 @media all and (min-width: 768px) {
-	main {
-		padding-top: 7em;
-	}
-
 	#logo {
 		font-size: 7em;
 	}
@@ -71,7 +62,7 @@ main {
 }
 
 @media all and (min-width: 1440px) {
-	main {
+	header {
 		padding-top: 10em;
 	}
 
@@ -81,5 +72,43 @@ main {
 
 	#get-started-btn {
 		font-size: 1.5em;
+	}
+}
+
+/* Queries for Landscape mode on Mobiles */
+
+@media all and (min-width: 320px)
+					 and (max-width: 599px)
+					 and (orientation: landscape) {
+	header {
+		padding-top: 3em;
+	}
+
+	.ui.negative.message {
+		max-width: 80%;
+		margin: 0 auto;
+		font-size: 0.55em;
+	}
+
+	#get-started-btn {
+		font-size: 0.9em;
+	}
+}
+
+@media all and (min-width: 600px)
+					 and (max-width: 830px)
+					 and (orientation: landscape) {
+	header {
+		padding-top: 3em;
+	}
+
+	.ui.negative.message {
+		max-width: 80%;
+		margin: 0 auto;
+		font-size: 0.65em;
+	}
+
+	#get-started-btn {
+		font-size: 0.9em;
 	}
 }

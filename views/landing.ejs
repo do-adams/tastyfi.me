@@ -16,6 +16,18 @@
 		<link rel="stylesheet" type="text/css" href="/stylesheets/landing.css">
 	</head>
 	<body>
+		<header class="ui center aligned container">
+			<% if (error && error.length > 0) { %>
+				<div class="ui negative message">
+					<i class="close icon"></i>
+					<div class="header">
+						Yikes! Something went wrong...
+					</div>
+					<% console.log(error) %>
+					<p><%= error %></p>
+				</div>
+			<% } %>
+		</header>
 		<main class="ui center aligned container">
 			<h1 id="logo">Tastyfi.me</h1>
 			<section id="description">
@@ -30,5 +42,15 @@
 				</div>
 			</a>
 		</main>
+		<script>
+			// Set dismissable action for messages and expand the header when closed
+			$('.message .close')
+				.on('click', function() {
+					$(this)
+						.closest('.message')
+						.transition('fade')
+						.remove();
+				});
+		</script>
 	</body>
 </html>
