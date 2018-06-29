@@ -73,7 +73,7 @@ passport.use(new SpotifyStrategy({
 				});
 				return done(null, newUser);
 			} else {
-				// If user re-authorizes, update the user 
+				// If user re-authorizes, update the user with new tokens
 				user.spotifyId = profile.id;
 				user.displayName = profile.displayName;
 				user.access.accessToken = accessToken;
