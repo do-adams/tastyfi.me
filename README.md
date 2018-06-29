@@ -33,11 +33,14 @@ PORT=<port_number>
 CLIENT_ID=<spotify_client_id>
 CLIENT_SECRET=<spotify_client_secret>
 REDIRECT_URI=<redirect_uri_for_spotify_authentication>
+
+# Caching
+SPOTIFY_CACHE_DURATION_MS=<cache_duration_value_in_milliseconds>
 ```
 
 The `REDIRECT_URI` should be the same as the Redirect URI registered with your Spotify application.
 
-Tastyfi.me already comes with preconfigured runtime values for Application Variables. **You'll just need to provide the Spotify Variables values if you're only interested in deploying to a local instance**.
+Tastyfi.me already comes with preconfigured runtime values for Application and Caching Variables. **You'll just need to provide the Spotify Variables values if you're only interested in deploying to a local instance**.
 
 ##### 4. How to Deploy:
 
