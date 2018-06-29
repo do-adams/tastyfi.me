@@ -26,7 +26,7 @@ router.get('/', refreshAuth, async (req, res, next) => {
 			throw new Error('Invalid time range value');
 		}
 		// Check cache
-		const cacheDuration = parseInt(process.env.SPOTIFY_CACHE_DURATION_MS), 
+		const cacheDuration = parseInt(process.env.SPOTIFY_CACHE_DURATION_MS || 86400000), 
 			key = `user_id=${req.params.id}&time_range=${timeRange}&limit=${limit}`, 
 			stored = cache.get(key);
 		if (!stored) {
