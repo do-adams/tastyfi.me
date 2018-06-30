@@ -19,7 +19,10 @@ const path = require('path'),
 // DB SETUP
 const dbUrl = process.env.DATABASE_URL || 'mongodb://localhost/tastyfi_me';
 mongoose.connect(dbUrl, function(err) {
-	if (err) throw err;
+	if (err) {
+		console.log(err.message);
+		throw err;
+	}
 });
 
 // GENERAL EXPRESS SETUP
@@ -45,6 +48,7 @@ app.use(session({
 		maxAge: 1000 * 60 * 60 * 24 * 7 * 2 // 2 weeks
 	}
 }));
+
 app.use(flash());
 
 // PASSPORT SETUP

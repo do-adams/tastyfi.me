@@ -23,7 +23,7 @@ router.get('/', refreshAuth, async (req, res, next) => {
 		if (!timeRange) {
 			timeRange = ranges[0];
 		} else if (!ranges.includes(timeRange)) {
-			throw new Error('Invalid time range value');
+			throw new Error('Invalid time range query value');
 		}
 		// Check cache
 		const cacheDuration = parseInt(process.env.SPOTIFY_CACHE_DURATION_MS || 86400000), 
