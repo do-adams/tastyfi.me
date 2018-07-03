@@ -2,6 +2,29 @@
 
 A web app for revealing a user's (good) taste in music with Spotify.
 
+Tastyfi.me is a full-stack application built with Node.js, Express, MongoDb, and EJS that uses the Spotify API for querying unique user and song data for generating dynamic user pages.
+
+It exists to help listeners understand their musical tastes over different time periods by viewing their most-loved Artists, Tracks, trends, and musical kinks.
+
+### Features
+
+Back-End:
+* MV* Back-End Architecture
+* RESTful Routes
+* User Sessions with express-session
+* Session Storage with connect-mongo
+* Oath 2.0 Authentication with Passport and Spotify
+* Asynchronous HTTP Requests and Db Queries with JavaScript Promises and Async/Await
+* In-Memory Caching of HTTP Responses with memory-cache
+* Custom Middleware for Express Routers
+* Flash Messages with connect-flash
+
+Front-End:
+* Dynamic Views with EJS
+* Responsive Pages and Components with Semantic-UI
+* Responsive Media Queries for Mobile Layouts
+* Web Browser Clipboard Functionality with Clipboard.js
+
 ### Getting Started
 
 ##### 1. System Requirements:
