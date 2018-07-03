@@ -4,7 +4,7 @@ A web app for revealing a user's (good) taste in music with Spotify.
 
 ![tastyfi showcase](public/images/tasty-showcase.gif)
 
-Tastyfi.me is a full-stack application built with Node.js, Express, MongoDb, and EJS that uses the Spotify API for querying unique user and song data for generating dynamic user pages.
+Tastyfi.me is a full-stack application built with Node.js, Express, MongoDb, and EJS that uses the Spotify Web API for querying unique user and song data for generating dynamic user pages.
 
 It exists to help listeners understand their musical tastes over different time periods by viewing their most loved Artists, Tracks, trends, and musical kinks.
 
