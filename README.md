@@ -8,6 +8,8 @@ Tastyfi.me is a full-stack application built with Node.js, Express, MongoDb, and
 
 It exists to help listeners understand their musical tastes over different time periods by viewing their most loved Artists, Tracks, trends, and musical kinks.
 
+Listeners can sign up with one click, create and view their user profiles, and share them with friends and family for discovering great new music.
+
 You can view it in action at http://www.tastyfi.me
 
 ### Features
