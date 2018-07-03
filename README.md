@@ -92,3 +92,8 @@ This repository intentionally contains the compiled Semantic UI files in version
 For more information on installing and using Semantic UI, see [Getting Started with Semantic UI](https://semantic-ui.com/introduction/getting-started.html).
 
 *Note: This project uses a CDN resource for the required jQuery file for Semantic UI. If you're upgrading the Semantic UI version you might need to also upgrade to a newer version of jQuery in your landing and partial view files.*
+
+### Photo Credits
+
+* Hand holding an iPhone Photo by [Jean](https://unsplash.com/photos/3NgcTH0CFJg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+* 404 Pug Photo by [Matthew Henry](https://unsplash.com/photos/hnYMacpvKZY?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
